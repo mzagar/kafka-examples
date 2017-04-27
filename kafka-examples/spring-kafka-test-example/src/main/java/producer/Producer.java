@@ -25,9 +25,14 @@ public class Producer {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(new URL("http://stream.meetup.com/2/rsvps").openStream()))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Sending: " + inputLine);
-                ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send("meetup", inputLine);
-                System.out.println(result.get().getRecordMetadata().toString());
+                try {
+                    System.out.println("Sending: " + inputLine);
+                    ListenableFuture<SendResult<String, String>> result = kafkaTemplate.send("meetup", inputLine);
+                    System.out.println(result.get().getRecordMetadata().toString());
+                } catch (Exception e) {
+                    System.err.println("error sending: " + e.getMessage());
+                    Thread.sleep(1000);
+                }
             }
         }
     }
