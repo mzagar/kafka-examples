@@ -12,7 +12,7 @@ public class ConsumerExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         Properties consumerProps = new Properties();
-        consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "Marios-MacBook-Pro.local:9092,Marios-MacBook-Pro.local:9093");
+        consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093");
         consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, "TestConsumerGroup");
         consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
@@ -21,7 +21,7 @@ public class ConsumerExample {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProps);
 
-        consumer.subscribe(Collections.singleton("spring-topic"), new ConsumerRebalanceListener() {
+        consumer.subscribe(Collections.singleton("example-topic"), new ConsumerRebalanceListener() {
             @Override
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.println("Partitions REVOKED:");

@@ -18,7 +18,7 @@ public class ProducerExample {
 
         for (int i = 0; i < 100_000_000; i++) {
             ProducerRecord<String, String> record = new ProducerRecord<>(
-                    "spring-topic",
+                    "example-topic",
                     String.valueOf(i),
                     UUID.randomUUID() + "-" + String.valueOf(i)
             );

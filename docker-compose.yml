@@ -7,17 +7,17 @@ services:
 
   kafka1:
     image: confluent/kafka
+    links:
+      - zookeeper
     ports:
       - "9092:9092"   # kafka port
       - "11001:11000"
-    links:
-      - zookeeper
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_ADVERTISED_HOST_NAME=Marios-MacBook-Pro.local
+      - KAFKA_ADVERTISED_HOST_NAME=${MY_HOST}
       - KAFKA_ADVERTISED_PORT=9092
       - JMX_PORT=11000
-
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
 
   kafka2:
     image: confluent/kafka
@@ -25,12 +25,13 @@ services:
       - "9093:9092"   # kafka port
       - "11002:11000"
     links:
-      - zookeeper
+       - zookeeper
     environment:
       - KAFKA_BROKER_ID=2
-      - KAFKA_ADVERTISED_HOST_NAME=Marios-MacBook-Pro.local
+      - KAFKA_ADVERTISED_HOST_NAME=${MY_HOST}
       - KAFKA_ADVERTISED_PORT=9093
       - JMX_PORT=11000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
 
   kafka3:
     image: confluent/kafka
@@ -38,12 +39,13 @@ services:
       - "9094:9092"   # kafka port
       - "11003:11000"
     links:
-      - zookeeper
+       - zookeeper
     environment:
       - KAFKA_BROKER_ID=3
-      - KAFKA_ADVERTISED_HOST_NAME=Marios-MacBook-Pro.local
+      - KAFKA_ADVERTISED_HOST_NAME=${MY_HOST}
       - KAFKA_ADVERTISED_PORT=9094
       - JMX_PORT=11000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
 
   kafka-manager:
     image: mzagar/kafka-manager-docker:1.3.3.4
